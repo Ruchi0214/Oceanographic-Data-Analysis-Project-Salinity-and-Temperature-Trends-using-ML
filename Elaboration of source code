@@ -1,0 +1,52 @@
+Let us navigate to each library from python to understand our code with a unique role and understand how they work together
+1.	Pandas: The Organizer 
+We need to organize our data first. Pandas is the tool that helps to handle data efficiently.
+df = pd.read_csv("/content/bottle.csv")
+
+This line uses Pandas to read a CSV file, like how an archivist would open a treasure chest of data. Pandas loads this data into a DataFrame, a structure that organizes your data into rows and columns.
+
+2.	Seaborn: The Storyteller
+Once the data is organized, Seaborn is a data visualization library that allows you to create visually appealing charts.
+
+sns.lmplot(x="Sal", y="Temp", data=df_bin_500, order=2, ci=None)
+
+This line uses Seaborn to create a scatterplot that shows the relationship between salinity (x-axis) and temperature (y-axis), adding a polynomial curve of order 2 (a parabola). It helps us to see the relationship between these two variables.
+
+3.	Numpy: The transformer
+It’s like a toolkit when we need to perform numerical operations. Here it is used to convert the data into arrays that the Machine Learning model can understand.
+X = np.array(df_bin_500['Sal']).reshape(-1, 1)
+Y = np.array(df_bin_500['Temp']).reshape(-1, 1)
+
+These lines extract your features (salinity) and target (temperature) into arrays, reshaping them to prepare for further operations.
+
+4.	Scikit-Learn: The Engineer
+This is like the engineer who takes the data and builds model to predict outcomes. It offers tools for both preprocessing and training models. Here are the key components that are used in the source code
+
+
+a)	Train-test Split
+Before the model starts It is necessary to divide the data into a training set (used to teach the model) and a test set (used to evaluate the model). 
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.25)
+
+By doing this, it is ensured that the model won't cheat by already knowing the test data.
+b)	Polynomial Features
+In order to understand complex relationships, it is mandatory to convert the salinity feature into a higher order polynomial using:
+
+poly = PolynomialFeatures(degree=3)
+X_train_poly = poly.fit_transform(X_train)
+
+This makes the salinity a more complex feature.
+c)	Linear Regression
+Eventually, the linear regression model is trained.
+
+model.fit(X_train_poly, Y_train)
+
+By fitting the data, a polynomial regression model is created in this line that attempts to depict the connection between salinity and temperature. Imagine it as a machine learning commander attempting to locate and recognize patterns in these variables.
+
+5.	Matplotlib: The Illustrator
+Once the model is trained and able to make predictions, Matplotlib is used to visualize the results.
+
+plt.scatter(X_test, Y_test, color='b', label='Actual Data')
+plt.plot(X_test_sorted, Y_pred_sorted, color='r', label='Predicted Curve')
+
+After making predictions on the test data, the results are visualized using Matplotlib. The plot shows the actual data points and the model’s predicted curve, giving a clear picture of how well the polynomial regression model fits the data.
