@@ -39,3 +39,46 @@ Functionality with perspective library
 •	Practical Application - Many oceanographic research depends on an understanding of the link between salinity and temperature since these two variables affect a variety of biological and physical processes in the ocean. 
 
 
+import numpy as np 
+import pandas as pd 
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+from sklearn.preprocessing import PolynomialFeatures 
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LinearRegression 
+
+df = pd.read_csv("/content/bottle.csv")
+df_bin = df[['Salnty', 'T_degC']] 
+df_bin.columns = ['Sal', 'Temp'] 
+ 
+df_bin_250 = df_bin[:250] 
+df_bin_250.dropna(inplace=True) 
+
+sns.lmplot(x="Sal", y="Temp", data=df_bin_250, order=2, ci=None) 
+
+X = np.array(df_bin_250['Sal']).reshape(-1, 1) 
+Y = np.array(df_bin_250['Temp']).reshape(-1, 1) 
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.25) 
+
+poly = PolynomialFeatures(degree=3)
+X_train_poly = poly.fit_transform(X_train)
+X_test_poly = poly.transform(X_test)
+
+model = LinearRegression()
+model.fit(X_train_poly, Y_train)
+
+print(model.score(X_train_poly, Y_train))
+
+Y_pred = model.predict(X_test_poly)
+
+sorted_indices = np.argsort(X_test[:, 0])
+X_test_sorted = X_test[sorted_indices]
+Y_pred_sorted = Y_pred[sorted_indices]
+
+plt.scatter(X_test, Y_test, color='b', label='Actual Data')
+plt.plot(X_test_sorted, Y_pred_sorted, color='r', label='Predicted Curve')
+plt.xlabel('Salinity')
+plt.ylabel('Temperature')
+plt.title('Polynomial Regression (Degree 3)')
+plt.legend()
+plt.show()
