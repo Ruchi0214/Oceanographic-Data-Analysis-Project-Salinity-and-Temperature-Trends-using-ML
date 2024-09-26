@@ -26,3 +26,16 @@ Functionality with perspective library
 •	Visualize the results to evaluate the performance of the model.
 
 ![image](https://github.com/user-attachments/assets/e909651c-72a8-4cdf-9f83-b38c89c060e6)
+
+**RESULTS:**
+•	The polynomial regression model performed quite well, as seen by its 91% (0.919) score. The result obtained in machine learning usually indicates how well the target variable's variation is explained by the model.
+
+•	With an R² of 0.919, the model based on the salinity measurements can account for 91.9% of the variation in temperature. The more closely the model's predictions match the actual data, the closer the R2 value is to 1. In this instance, the model's high predictive power is indicated by its 91% score.
+
+•	Accuracy - With a 91% score, the model is often able to forecast temperature based on salinity. Because of its high degree of accuracy, the model may be used to real-world problems including environmental monitoring, oceanographic research, and marine science predictive analytics.
+
+•	The choice of polynomial degree was important in this investigation. Non-linear behaviors are frequently seen in real-world environmental phenomena, such as the interplay between temperature and salt in ocean water. It would have been too easy to express these variances with a linear model. Nevertheless, the regression model was able to represent curved connections and capture the highs and lows in the data by adding polynomial component
+
+•	Practical Application - Many oceanographic research depends on an understanding of the link between salinity and temperature since these two variables affect a variety of biological and physical processes in the ocean. 
+
+
